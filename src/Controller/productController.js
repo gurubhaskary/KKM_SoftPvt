@@ -58,9 +58,8 @@ const getProductById = async function (req, res) {
         if (!(productIdEntered)) return res.status(400).send({ status: false, message: "Enter a product id" });
 
         let fullproductDetails = await productModel.findById(productIdEntered );
-        //===================== Checking Book Exsistance =====================//
+        //===================== Checking product Exsistance =====================//
         if (!fullproductDetails) return res.status(404).send({ status: false, message: 'product Not Found' })
-        //===================== Getting Reviews of Book =====================//
         
 
         return res.status(200).send({ status: true, message: 'product list', data: fullproductDetails })
@@ -80,7 +79,7 @@ const updateProductbyId = async function (req, res) {
         if (!valid(productId)) return res.status(400).send({ status: false, message: "product Id is Invalid !!!!" })
         if (Object.keys(req.body).length == 0) return res.status(400).send({ status: false, message: "please enter data in body" });
 
-        //===================== Checking Book Exsistance =====================//
+        //===================== Checking product Exsistance =====================//
         let productData = await productModel.findOne({ _id: productId})
         if (!productData) return res.status(404).send({ status: false, message: "No product Found using productId" })
 
@@ -92,7 +91,7 @@ const updateProductbyId = async function (req, res) {
 
         }
 
-        //=====================Updating Bookd=====================//
+        //=====================Updating product=====================//
         let updatedProduct = await productModel.findByIdAndUpdate(productId, req.body, { new: true })
         return res.status(200).send({ status: true, data: updatedProduct })
 
@@ -132,4 +131,3 @@ module.exports.getAllProduct = getAllProduct
 module.exports.getProductById = getProductById
 module.exports.updateProductbyId = updateProductbyId
 module.exports.deletebyId = deletebyId
-// module.exports={createBooks,getAllBook,getBooksByPathParam, updateBookbyId,deletebyId};

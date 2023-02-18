@@ -5,8 +5,6 @@ const router = express.Router();
 
 const UserController = require("../Controller/userController");
 const productController = require("../Controller/productController")
-// const {createUser,login} = require("../Controller/userController");
-// const {createBooks,getAllBook,getBooksByPathParam, updateBookbyId,deletebyId} = require("../Controller/bookController");
 const {authentication,authorisation} = require("../middleware/auth")
 
 
