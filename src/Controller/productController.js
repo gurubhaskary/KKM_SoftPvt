@@ -29,15 +29,22 @@ const getAllProduct = async function (req, res) {
         if (queryParams.userId && !queryParams.userId.match(/^[0-9a-fA-F]{24}$/)) {
             return res.status(400).send({ status: false, message: "Incorrect userId" })
         }
-        let findProduct = await productModel.find()
+        
+        if(Object.keys(queryParams).length > 0){
+            let findProduct = await productModel.find({ ...queryParams });
+            findProduct.sort(function (a, b) {
+                return a.Productname.localeCompare(b.Productname)
+            })
+            if (findProduct.length == 0) {
+                return res.status(404).send({ status: false, message: "Product not found" })
+            }
 
-        findProduct.sort(function (a, b) {
-            return a.Productname.localeCompare(b.Productname)
-        })
-        if (!findProduct && findProduct.length == 0) {
-            return res.status(404).send({ status: false, message: "Product not found" })
+            return res.status(200).send({ status: true, message: "Product list", data: findProduct })
+        }else{
+            return res.status(200).send({ status: false, message: "Enter Data to searh" })
         }
-        return res.status(200).send({ status: true, message: "Product list", data: findProduct })
+               
+       
     } catch (error) {
         return res.status(500).send({ status: false, message: error.message })
     }

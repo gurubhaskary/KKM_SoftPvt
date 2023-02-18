@@ -13,8 +13,8 @@ const {authentication,authorisation} = require("../middleware/auth")
 router.post("/register", UserController.createUser);
 router.post("/login", UserController.login);
 router.post("/product", authentication,productController.createProduct);
-router.get("/product", productController.getAllProduct);
-router.get("/product/:productId", productController.getProductById);
+router.get("/product", authentication,productController.getAllProduct);src/routes/route.js
+router.get("/product/:productId", authentication,productController.getProductById);
 router.put("/product/:productId",authentication,authorisation,productController.updateProductbyId);
 router.delete("/product/:productId",authentication,authorisation, productController.deletebyId);
 
